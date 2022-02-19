@@ -1,6 +1,6 @@
 {
   "name": "stdf-analyser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a library tool to parse STDF files.",
   "main": "index.js",
   "scripts": {

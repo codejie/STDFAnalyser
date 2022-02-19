@@ -12,6 +12,7 @@ A library tool to parse STDF files.
 ```
 
 ## Usage
+- callback
 ```ts
     import fs from 'fs'
     import { STDFAnalyser } from 'stdf-analyser'
@@ -32,6 +33,15 @@ A library tool to parse STDF files.
         console.log('analyse end.')
         console.log(`start: ${start.toISOString()}\nend: ${(new Date()).toISOString()}`)
     })
+```
+- sync
+```ts
+    for await (const chunk of input) {
+        await analyser.analyseSync(<Buffer>chunk, (record) => {
+            console.log(record.toString())
+            return Promise.resolve()
+        })
+    }
 ```
 
 ## Options
