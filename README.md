@@ -1,5 +1,5 @@
 # STDFAnalyser
-------------------------
+
 A library tool to parse STDF files.
 
 - base on STDF v4
@@ -15,11 +15,12 @@ A library tool to parse STDF files.
 - callback
 ```ts
     import fs from 'fs'
-    import { STDFAnalyser } from 'stdf-analyser'
+    import { STDFAnalyser, STDFAnalyserOptions } from 'stdf-analyser'
 
     const input = fs.createReadStream('./test/demo.stdf')
 
-    const analyser: STDFAnalyser = new STDFAnalyser()
+    const opts: STDFAnalyserOptions | undefine = undefine
+    const analyser: STDFAnalyser = new STDFAnalyser(opts)
 
     const start: Date = new Date()
 
