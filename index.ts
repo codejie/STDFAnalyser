@@ -2,6 +2,8 @@ import CacheBuffer, { BYTE_ORDER_AUTO, BYTE_ORDER_BE, BYTE_ORDER_LE } from "./li
 import * as Record from  "./lib/record-define"
 import { makeRecord } from "./lib/record-define/helper"
 
+export * as Record from "./lib/record-define"
+
 export interface STDFAnalyserOptions {
     bufferSize?: number,
     byteOrder?: number,
