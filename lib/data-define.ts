@@ -34,10 +34,10 @@ export abstract class DataBase {
         }
     }
 
-    toValueString(): string { return this.value.toString() }
-    toValueNotes(): string { return this.valueNotes ? this.valueNotes() : this.value.toString() }
+    toValueString(): string { return (this.value !== undefined ? this.value.toString() : '-') }
+    toValueNotes(): string { return this.valueNotes ? this.valueNotes() : this.toValueString() }
     toDescript(): string { return this.name + ' - ' + this.desc || '' }
-    toString(): string { return this.name + ' : ' + (this.valueNotes ? this.valueNotes() : (this.value !== undefined ? this.value : '-')) } 
+    toString(): string { return this.name + ' : ' + (this.valueNotes ? this.valueNotes() : this.toValueString()) } 
 
     abstract parse(buf: CacheBuffer): number
 }
@@ -57,12 +57,19 @@ export abstract class DataArrayBase<T extends DataBase> extends DataBase {
     }
 
     toValueString(): string {
-        let ret: string = this.name + ' items(' + this.value.length + '):\n'
+        let ret: string = '[' + this.value.length + ']'
         for (let item of this.value) {
-            ret = ret.concat(item.toString() + '\n')
+            ret = ret.concat(item.toValueString() + '|')
         }
-        ret = ret.concat('-- end')
         return ret 
+    }
+
+    toValueNotes(): string {
+        let ret: string = '[' + this.value.length + ']'
+        for (let item of this.value) {
+            ret = ret.concat(item.valueNotes ? item.valueNotes() : item.toValueString() + '|')
+        }
+        return ret         
     }
 
     toDescript(): string {        
@@ -72,7 +79,7 @@ export abstract class DataArrayBase<T extends DataBase> extends DataBase {
     toString(): string {
         let ret: string = this.name + ' items(' + this.value.length + '):\n'
         for (let item of this.value) {
-            ret = ret.concat(item.name + ': ' + (item.valueNotes ? item.valueNotes() : (item.value !== undefined ? item.value : '-') + '\n'))
+            ret = ret.concat(item.name + ': ' + (item.valueNotes ? item.valueNotes() : item.toValueString()) + '\n')
         }
         ret = ret.concat('-- end')
         return ret 
