@@ -1,5 +1,5 @@
 import CacheBuffer from './cache-buffer'
-import { RecordBase } from './record-define'
+import { FIELD_VALUE_INVALID_DEFAULT, RecordBase } from './record-define'
 
 type ValueNotesFunc = (this: DataBase) => string 
 
@@ -34,7 +34,7 @@ export abstract class DataBase {
         }
     }
 
-    toValueString(): string { return (this.value !== undefined ? this.value.toString() : '-') }
+    toValueString(): string { return (this.value !== undefined ? this.value.toString() : FIELD_VALUE_INVALID_DEFAULT) }
     toValueNotes(): string { return this.valueNotes ? this.valueNotes() : this.toValueString() }
     toDescript(): string { return this.name + ' - ' + this.desc || '' }
     toString(): string { return this.name + ' : ' + (this.valueNotes ? this.valueNotes() : this.toValueString()) } 

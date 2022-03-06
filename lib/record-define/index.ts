@@ -34,6 +34,8 @@ export const ParseResult = {
     PART: 2
 }
 
+export const FIELD_VALUE_INVALID_DEFAULT: string = '-'
+
 export class RecordBase {
 
     readonly name: string

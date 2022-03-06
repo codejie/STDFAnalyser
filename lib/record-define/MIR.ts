@@ -1,5 +1,5 @@
 import { DateData, UInt8Data, UInt16Data, VariableStringData, FixedStringData, DataBase } from "../data-define"
-import { RecordBase, RecordType, RecordSub } from "."
+import { RecordBase, RecordType, RecordSub, FIELD_VALUE_INVALID_DEFAULT } from "."
 
 function ValueNotes_MODE_COD(this: DataBase): string {
     switch(this.value) {
@@ -35,6 +35,19 @@ function ValueNotes_RTST_COD(this: DataBase): string {
     }
 }
 
+function ValueNotes_PROT_COD(this: DataBase): string {
+    if (this.value === ' ') {
+        return FIELD_VALUE_INVALID_DEFAULT
+    }
+    return this.value
+}
+
+function ValueNotes_BURN_TIM(this: DataBase): string {
+    if (this.value === 65535) {
+        return FIELD_VALUE_INVALID_DEFAULT
+    }
+    return this.value
+}
 
 export default class MIRRecord extends RecordBase {
     constructor() {
@@ -45,8 +58,8 @@ export default class MIRRecord extends RecordBase {
         this.addField(new UInt8Data('STAT_NUM', 'Tester station number'))
         this.addField(new FixedStringData('MODE_COD', 'Test mode code (e.g. prod or dev)', ValueNotes_MODE_COD, 1))
         this.addField(new FixedStringData('RTST_COD', 'Lot retest code', ValueNotes_RTST_COD, 1))
-        this.addField(new FixedStringData('PROT_COD', 'Data protection code', undefined, 1))
-        this.addField(new UInt16Data('BURN_TIM', 'Burn-in time (in minutes)'))
+        this.addField(new FixedStringData('PROT_COD', 'Data protection code', ValueNotes_PROT_COD, 1))
+        this.addField(new UInt16Data('BURN_TIM', 'Burn-in time (in minutes)', ValueNotes_BURN_TIM))
         this.addField(new FixedStringData('CMOD_COD', 'Command mode code', undefined, 1))
         this.addField(new VariableStringData('LOT_ID', 'Lot ID (customer specified)'))
         this.addField(new VariableStringData('PART_TYP', 'Part Type (or product ID)'))

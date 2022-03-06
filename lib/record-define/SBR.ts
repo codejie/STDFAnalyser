@@ -1,14 +1,14 @@
 import { DataBase, FixedStringData, UInt16Data, UInt32Data, UInt8Data, VariableStringData } from "../data-define"
-import { RecordBase, RecordType, RecordSub } from "."
+import { RecordBase, RecordType, RecordSub, FIELD_VALUE_INVALID_DEFAULT } from "."
 
 function ValueNotes_SBIN_PF(this: DataBase): string {
     switch (this.value) {
         case 'P':
-            return 'Pass'
+            return 'PassingBin'
         case 'F':
-            return 'Fail'
+            return 'FailingBin'
         case ' ':
-            return '-'
+            return 'Unknown'
         default:
             return this.value.toString()
     }

@@ -1,5 +1,5 @@
 import { UInt8Data, UInt32Data, FixedStringData, VariableStringData, FloatData, DataBase } from "../data-define"
-import { RecordBase, RecordType, RecordSub } from "."
+import { RecordBase, RecordType, RecordSub, FIELD_VALUE_INVALID_DEFAULT } from "."
 
 function ValueNotes_TEST_TYP(this: DataBase): string {
     switch(this.value) {
@@ -10,8 +10,15 @@ function ValueNotes_TEST_TYP(this: DataBase): string {
         case 'M':
             return 'Multi-result parametric test'
         default:
-            return 'Unknown'
+            return FIELD_VALUE_INVALID_DEFAULT
     }
+}
+
+function ValueNotes_U4(this: DataBase): string {
+    if (this.value === 4,294,967,295) {
+        return FIELD_VALUE_INVALID_DEFAULT
+    }
+    return this.value.toString()
 }
 
 export default class TSRRecord extends RecordBase {
@@ -22,9 +29,9 @@ export default class TSRRecord extends RecordBase {
         this.addField(new UInt8Data('SITE_NUM', 'Test site number'))
         this.addField(new FixedStringData('TEST_TYP', 'Test type', ValueNotes_TEST_TYP, 1))
         this.addField(new UInt32Data('TEST_NUM', 'Test number'))
-        this.addField(new UInt32Data('EXEC_CNT', 'Number of test executions'))
-        this.addField(new UInt32Data('FAIL_CNT', 'Number of test failures'))
-        this.addField(new UInt32Data('ALRM_CNT', 'Number of alarmed tests'))
+        this.addField(new UInt32Data('EXEC_CNT', 'Number of test executions', ValueNotes_U4))
+        this.addField(new UInt32Data('FAIL_CNT', 'Number of test failures', ValueNotes_U4))
+        this.addField(new UInt32Data('ALRM_CNT', 'Number of alarmed tests', ValueNotes_U4))
         this.addField(new VariableStringData('TEST_NAM', 'Test name'))
         this.addField(new VariableStringData('SEQ_NAME', 'Sequencer (program segment/flow) name'))
         this.addField(new VariableStringData('TEST_LBL', 'Test label or text'))
