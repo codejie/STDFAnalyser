@@ -55,7 +55,7 @@ A library tool to parse STDF files.
         allCallback?: boolean
     }
 ```
-- bufferSize: cache size of buffer to read file, default is 128 * 1024
+- bufferSize: cache size of buffer to read file, default is 64 * 1024
 - byteOrder: specify STDF file byte order, support 'BYTE_ORDER_AUTO', 'BYTE_ORDER_LE' and 'BYTE_ORDER_BE', default is BYTE_ORDER_AUTO
 - included: specify the STDF Record Type to be analysed, such as 'ATR', 'FTR', etc., default is all
 - excluded: specify the STDF Record Type not to be analysed, default is none

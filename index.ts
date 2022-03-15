@@ -16,7 +16,7 @@ export type STDFAnalyserCallback = (record: Record.RecordBase) => void
 export type STDFAnalyserSyncCallback = (record: Record.RecordBase) => Promise<void>
 
 const defaultAnalyserOptions: STDFAnalyserOptions = {
-    bufferSize: 128 * 1024,
+    bufferSize: 64 * 1024,
     byteOrder: BYTE_ORDER_AUTO,
     allCallback: false
 }
@@ -43,10 +43,17 @@ export class STDFAnalyser {
         // }
 
         this.buffer = new CacheBuffer({
-            bufferSize: this.opts.bufferSize, // || 128 * 1024,
+            bufferSize: this.opts.bufferSize, // || 64 * 1024,
             byteOrder: this.opts.byteOrder, // || BYTE_ORDER_AUTO           
-        })
-        
+        });
+    }
+
+    public updateIncluded(included: string[]) {
+        this.opts.included = included;
+    }
+
+    public updateExcluded(excluded: string[]) {
+        this.opts.excluded = excluded;
     }
     
     public analyse(chunk: Buffer, callback?: STDFAnalyserCallback): Promise<Record.RecordBase[]> | void {   

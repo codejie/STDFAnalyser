@@ -22,7 +22,7 @@ export default class CacheBuffer {
     buffer: Buffer
 
     constructor(opts?: CacheBufferOptions) {
-        this.maxSize = opts ? (opts.bufferSize || 128 * 1024) : 128 * 1024
+        this.maxSize = opts ? (opts.bufferSize || 64 * 1024) : 64 * 1024
         this.byteOrder = opts ? (opts.byteOrder || BYTE_ORDER_BE) : BYTE_ORDER_BE
         this.buffer = Buffer.allocUnsafe(this.maxSize)
     }
